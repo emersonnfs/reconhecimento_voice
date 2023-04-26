@@ -1,0 +1,29 @@
+import speech_recognition as sr
+
+reconhecedor = sr.Recognizer()
+microfone = sr.Microphone()
+
+while True:
+    try:
+        with microfone as mic:
+            reconhecedor.adjust_for_ambient_noise(mic)
+            print("Fale a conta que deseja calcular")
+            audio = reconhecedor.listen(mic)
+            texto = reconhecedor.recognize_google(audio, language='pt')
+            print(texto)
+            conta = texto.split()
+
+            if conta[1] == "+":
+                print(float(conta[0]) + float(conta[2]))
+            elif conta[1] == "-":
+                print(float(conta[0]) - float(conta[2]))
+            elif conta[1] == "x":
+                print(float(conta[0]) * float(conta[2]))
+            elif conta[1] == "/":
+                print(float(conta[0]) / float(conta[2]))
+            elif conta[1] == "elevado":
+                print(float(conta[0]) ** float(conta[2]))
+            else:
+                print("Operação inválida.")
+    except:
+        print("Erro durante o reconhecimento de voz.")
